@@ -1,5 +1,5 @@
 const { parseAndCheckArguments } = require('./cli/CLI')
-const { PacketEmitter, PortAnalyser, MetricAnalyser, PortUsageClusteredAnalyser, TopTwentyPortsByTrafficAnalyser, SynStateAnalyser } = require('./exports')
+const { PacketEmitter, PortAnalyser, MetricAnalyser, PortUsageClusteredAnalyser, TopTwentyPortsByTrafficAnalyser, SynStateAnalyser, IPVersionAnalyser } = require('./exports')
 try {
   var settings = parseAndCheckArguments(process.argv)
   analyseFileInProjectFolder(settings.pcapPath)  
@@ -16,16 +16,18 @@ function analyseFileInProjectFolder (projectPath, cb) {
     var topTwentyAnalyser = new TopTwentyPortsByTrafficAnalyser(emitter, projectPath)
     var clusteredAnalyser = new PortUsageClusteredAnalyser(emitter, projectPath)
     var synStateAnalyser = new SynStateAnalyser(emitter, projectPath)
+    var ipVersionAnalyser = new IPVersionAnalyser(emitter, projectPath)
 
-    setUpAndRun(emitter, portAnalyser, metricAnalyser, topTwentyAnalyser, clusteredAnalyser, synStateAnalyser, projectPath, cb)
+    setUpAndRun(emitter, portAnalyser, metricAnalyser, topTwentyAnalyser, clusteredAnalyser, synStateAnalyser, ipVersionAnalyser, projectPath, cb)
 
 }
-async function setUpAndRun (emitter, portAnalyser, metricAnalyser, topTwentyAnalyser, clusteredAnalyser, synStateAnalyser, target, cb) {
+async function setUpAndRun (emitter, portAnalyser, metricAnalyser, topTwentyAnalyser, clusteredAnalyser, synStateAnalyser, ipVersionAnalyser, target, cb) {
     await portAnalyser.setUp()
     await metricAnalyser.setUp()
     await topTwentyAnalyser.setUp()
     await clusteredAnalyser.setUp()
     await synStateAnalyser.setUp()
+    await ipVersionAnalyser.setUp()
 
     try {
         emitter.startPcapSession(target)
@@ -40,13 +42,15 @@ async function setUpAndRun (emitter, portAnalyser, metricAnalyser, topTwentyAnal
         var topTwentyResult = await topTwentyAnalyser.postParsingAnalysis()
         var clusteredResult = await clusteredAnalyser.postParsingAnalysis()
         var synResult = await synStateAnalyser.postParsingAnalysis()
+        var ipResult = await ipVersionAnalyser.postParsingAnalysis()
         console.log(`Miners for ${target} have finished\n`)
         var output = JSON.stringify({
           portanalysis: portAnalysisResult,
           general: metricAnalysisResult,
           topTwenty: topTwentyResult,
           clusteredPorts: clusteredResult,
-          synResult: synResult
+          synResult: synResult,
+          ipResult: ipResult
         })
         if(process && process.send) {
             // If this function exists in scope we know that we are in a forked ChildProcess
