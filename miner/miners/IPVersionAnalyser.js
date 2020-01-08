@@ -20,7 +20,7 @@ class IPVersionAnalyser extends GenericPcapAnalyser {
           piechart: {
             datasets: [{
               backgroundColor: ['#D33F49',  '#77BA99'],
-              vals: Object.values(this.results)
+              data: Object.values(this.results)
             }],
             labels: ['IPv4', 'IPv6']
           }
