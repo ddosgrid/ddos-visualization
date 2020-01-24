@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.cc0856fa729c5d8781782a840e3499c4.js"
+  "/precache-manifest.301b693d708cc7488cd27d78cdf4ae8f.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "ddosgrid.online"});
