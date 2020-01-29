@@ -64,6 +64,7 @@ export default {
     openDiagram: function (analysisFile, chart) {
       analysisFile.chart = chart
       this.$store.commit('addVisualization', analysisFile)
+      this.$emit('vis-added')
     },
     closeDataSet: function (dataset) {
       this.$store.commit('removeDataSet', dataset)

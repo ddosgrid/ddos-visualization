@@ -3,18 +3,24 @@
     <h1>
     Visualization Dashboard
     </h1>
-    <div id="flex-container">
+    <div class="grid">
+      <!--
       <md-empty-state
         md-icon="grid_on"
         md-label="No analysis files were added"
         md-description="You can add a tile for each dataset that you have uploaded on the datasets page" v-if="datasets.length === 0" class="empty-notification">
         <md-button class="md-primary md-raised" to="/datasets">Open a dataset</md-button>
       </md-empty-state>
-      <visualizationtile class="tile" v-for="analysisfile in analysisfiles" :key="analysisfile.file" :analysisfile="analysisfile">
-      </visualizationtile>
+    -->
+      <div class="item" v-for="analysisfile in analysisfiles" :key="analysisfile.file" ref="analyses">
+        <visualizationtile class="item-content" :analysisfile="analysisfile">
+        </visualizationtile>
+      </div>
+      <div class="item" v-for="dataset in datasets" :key="dataset._id" ref="datasets">
+        <datasettile class="item-content" :dataset="dataset" @vis-added="addVisToGrid">
+        </datasettile>
+      </div>
 
-      <datasettile class="tile" v-for="dataset in datasets" :key="dataset._id" :dataset="dataset">
-      </datasettile>
     </div>
 
     <md-speed-dial class="md-bottom-right no-print above" md-event="hover" id="dial">
@@ -87,6 +93,7 @@
 <script>
 import DataSetTile from '../components/DataSetTile'
 import VisualizationTile from '../components/VisualizationTile'
+import Muuri from 'muuri'
 
 export default {
   name: 'DashBoard',
@@ -104,6 +111,11 @@ export default {
   },
   mounted: function () {
     window.gg = this.$store
+    window.grid = new Muuri('.grid', {
+      dragEnabled: true
+    })
+    console.log(window.grid)
+    console.log(this.datasets)
   },
   methods: {
     loadSetup: function saveSetup (id) {
@@ -124,6 +136,10 @@ export default {
     },
     exportToPdf: function exportToPdf () {
       window.print()
+    },
+    addVisToGrid: function addVisToGrid () {
+      var newNode = this.$refs.analyses[this.$refs.analyses.length - 1]
+      window.grid.add(newNode)
     }
   },
   computed: {
@@ -192,5 +208,34 @@ export default {
 }
 .above {
   z-index: 1;
+}
+
+.grid {
+  position: relative;
+}
+
+.item {
+  display: block;
+  position: absolute;
+  margin: 5px;
+  z-index: 1;
+}
+
+.item.muuri-item-dragging {
+  z-index: 3;
+}
+
+.item.muuri-item-releasing {
+  z-index: 2;
+}
+
+.item.muuri-item-hidden {
+  z-index: 0;
+}
+
+.item-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 </style>
