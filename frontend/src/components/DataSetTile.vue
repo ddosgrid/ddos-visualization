@@ -63,10 +63,15 @@ export default {
     },
     openDiagram: function (analysisFile, chart) {
       analysisFile.chart = chart
-      this.$store.commit('addVisualization', analysisFile)
-      this.$emit('vis-added')
+      // this.$store.commit('addVisualization', analysisFile)
+      // this.$emit('vis-added')
+
+      this.$store.dispatch('addVisualization', analysisFile).then((value) => {
+        this.$emit('vis-added')
+      })
     },
     closeDataSet: function (dataset) {
+      this.$emit('dataset-removed', dataset)
       this.$store.commit('removeDataSet', dataset)
     },
     translateDiagramToIcon: function translateDiagramToIcon (diagram) {

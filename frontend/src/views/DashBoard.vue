@@ -13,11 +13,11 @@
       </md-empty-state>
     -->
       <div class="item" v-for="analysisfile in analysisfiles" :key="analysisfile.file" ref="analyses">
-        <visualizationtile class="item-content" :analysisfile="analysisfile">
+        <visualizationtile class="item-content" :analysisfile="analysisfile" @vis-removed="removeVisFromGrid">
         </visualizationtile>
       </div>
       <div class="item" v-for="dataset in datasets" :key="dataset._id" ref="datasets">
-        <datasettile class="item-content" :dataset="dataset" @vis-added="addVisToGrid">
+        <datasettile class="item-content" :dataset="dataset" @vis-added="addVisToGrid" @dataset-removed="removeDatasetFromGrid">
         </datasettile>
       </div>
 
@@ -138,8 +138,15 @@ export default {
       window.print()
     },
     addVisToGrid: function addVisToGrid () {
+      console.log(this.$refs.analyses)
       var newNode = this.$refs.analyses[this.$refs.analyses.length - 1]
       window.grid.add(newNode)
+    },
+    removeVisFromGrid: function removeVisFromGrid () {
+
+    },
+    removeDatasetFromGrid: function removeDataSetFromGrid (dataset) {
+      console.log(dataset)
     }
   },
   computed: {

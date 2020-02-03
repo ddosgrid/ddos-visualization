@@ -48,6 +48,10 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    async addVisualization (context, newVisualization) {
+      context.commit('addVisualization', newVisualization)
+      return true
+    }
   },
   modules: {
   },
