@@ -46,6 +46,9 @@ export default new Vuex.Store({
       } else if (Object.prototype.hasOwnProperty.call(toBeRemoved, 'md5')) {
         state.tiles = state.tiles.filter(dataset => dataset.md5 !== toBeRemoved.md5)
       }
+    },
+    clearTiles (state) {
+      state.tiles = []
     }
   },
   actions: {

@@ -23,6 +23,12 @@
       </md-speed-dial-target>
 
       <md-speed-dial-content>
+        <md-button :disabled="dashBoardIsEmpty" class="md-icon-button" @click="clearDashboard">
+          <md-tooltip md-direction="top" v-if="dashBoardIsEmpty">Dashboard is already empty</md-tooltip>
+          <md-tooltip md-direction="top" v-else>Clear the dashboard</md-tooltip>
+          <md-icon>clear</md-icon>
+        </md-button>
+
         <md-button :disabled="dashBoardIsEmpty" class="md-icon-button" @click="exportToPdf">
           <md-tooltip md-direction="top" v-if="dashBoardIsEmpty">Please add some visualizations first</md-tooltip>
           <md-tooltip md-direction="top" v-else>Export dashboard as PDF or print it</md-tooltip>
@@ -135,6 +141,9 @@ export default {
       } else if (Object.prototype.hasOwnProperty.call(tile, 'md5')) {
         return 'datasettile'
       }
+    },
+    clearDashboard: function clearDashboard () {
+      this.$store.commit('clearTiles')
     }
   },
   watch: {
