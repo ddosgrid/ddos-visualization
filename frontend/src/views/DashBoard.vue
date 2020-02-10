@@ -191,10 +191,6 @@ export default {
   z-index: 1;
 }
 
-.dashboard {
-  width: 80%;
-}
-
 .grid {
   position: relative;
 }
@@ -204,8 +200,6 @@ export default {
   position: absolute;
   margin: 5px;
   z-index: 1;
-  background: #000;
-  color: #fff;
 }
 .item.muuri-item-dragging {
   z-index: 3;
