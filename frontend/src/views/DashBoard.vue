@@ -4,7 +4,7 @@
     Visualization Dashboard
     </h1>
 
-    <div id="flex-container">
+    <div id="" class="grid">
       <md-empty-state
         md-icon="grid_on"
         md-label="No analysis files were added"
@@ -12,8 +12,9 @@
         <md-button class="md-primary md-raised" to="/datasets">Open a dataset</md-button>
         {{ tiles }}
       </md-empty-state>
-
-      <component v-for="tile in tiles" :key="tile.key" v-bind:is="getComponentType(tile)" :analysisfile="tile" :dataset="tile"></component>
+      <div class="item" v-for="tile in tiles" :key="tile.key">
+        <component class="item-content" v-bind:is="getComponentType(tile)" :analysisfile="tile" :dataset="tile"></component>
+      </div>
     </div>
 
     <md-speed-dial class="md-bottom-right no-print above" md-event="hover" id="dial">
@@ -84,6 +85,7 @@
 </template>
 
 <script>
+import Muuri from 'muuri'
 import DataSetTile from '../components/DataSetTile'
 import VisualizationTile from '../components/VisualizationTile'
 
@@ -103,6 +105,9 @@ export default {
   },
   mounted: function () {
     window.gg = this.$store
+    window.grid = new Muuri('.grid', {
+      dragEnabled: true
+    })
   },
   methods: {
     loadSetup: function saveSetup (id) {
@@ -164,17 +169,6 @@ export default {
     display: none !important;
   }
 }
-#flex-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.tile {
-  flex-basis: 300px;
-  flex-grow: 1;
-  margin: 10px 10px;
-}
 @media only screen and (max-device-width: 768px){
   .tile {
     flex-basis: 100%;
@@ -195,5 +189,36 @@ export default {
 }
 .above {
   z-index: 1;
+}
+
+.dashboard {
+  width: 80%;
+}
+
+.grid {
+  position: relative;
+}
+
+.item {
+  display: block;
+  position: absolute;
+  margin: 5px;
+  z-index: 1;
+  background: #000;
+  color: #fff;
+}
+.item.muuri-item-dragging {
+  z-index: 3;
+}
+.item.muuri-item-releasing {
+  z-index: 2;
+}
+.item.muuri-item-hidden {
+  z-index: 0;
+}
+.item-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 </style>
