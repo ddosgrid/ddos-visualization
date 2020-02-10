@@ -101,7 +101,8 @@ export default {
       showSaveSetups: false,
       setupName: '',
       loading: false,
-      numberOfTiles: 0
+      numberOfTiles: 0,
+      grid: null
     }
   },
   components: {
@@ -111,7 +112,7 @@ export default {
   mounted: function () {
     window.gg = this.$store
     this.numberOfTiles = this.tiles.length
-    window.grid = new Muuri('.grid', {
+    this.grid = new Muuri('.grid', {
       dragEnabled: true
     })
   },
@@ -149,22 +150,17 @@ export default {
   watch: {
     tiles () {
       if (this.tiles.length === 0) {
-        setTimeout(jkl, 200)
+        setTimeout(destroyGrid, 200)
       } else {
-        console.log('in watcher ' + this.tiles)
-        for (var tile of this.$refs.tiles) {
-          console.log(tile)
-        }
-
-        setTimeout(asdf, 200)
+        setTimeout(redrawGrid, 200)
       }
-      function asdf () {
-        window.grid = new Muuri('.grid', {
+      function redrawGrid () {
+        this.grid = new Muuri('.grid', {
           dragEnabled: true
         })
       }
-      function jkl () {
-        window.grid.destroy(true)
+      function destroyGrid () {
+        this.grid.destroy(true)
       }
     }
   },
