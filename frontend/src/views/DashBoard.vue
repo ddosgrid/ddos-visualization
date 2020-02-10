@@ -3,15 +3,13 @@
     <h1>
     Visualization Dashboard
     </h1>
-
+    <md-empty-state
+      md-icon="grid_on"
+      md-label="No analysis files were added"
+      md-description="You can add a tile for each dataset that you have uploaded on the datasets page" v-if="tiles.length === 0" class="empty-notification">
+      <md-button class="md-primary md-raised" to="/datasets">Open a dataset</md-button>
+    </md-empty-state>
     <div id="" class="grid">
-      <md-empty-state
-        md-icon="grid_on"
-        md-label="No analysis files were added"
-        md-description="You can add a tile for each dataset that you have uploaded on the datasets page" v-if="tiles.length === 0" class="empty-notification">
-        <md-button class="md-primary md-raised" to="/datasets">Open a dataset</md-button>
-        {{ tiles }}
-      </md-empty-state>
       <div class="item" v-for="tile in tiles" :key="tile.key" ref="tiles">
         <component class="item-content" v-bind:is="getComponentType(tile)" :analysisfile="tile" :dataset="tile"></component>
       </div>
@@ -141,16 +139,23 @@ export default {
   },
   watch: {
     tiles () {
-      console.log('in watcher ' + this.tiles)
-      for (var tile of this.$refs.tiles) {
-        console.log(tile)
-      }
+      if (this.tiles.length === 0) {
+        setTimeout(jkl, 100)
+      } else {
+        console.log('in watcher ' + this.tiles)
+        for (var tile of this.$refs.tiles) {
+          console.log(tile)
+        }
 
-      setTimeout(asdf, 100)
+        setTimeout(asdf, 100)
+      }
       function asdf () {
         window.grid = new Muuri('.grid', {
           dragEnabled: true
         })
+      }
+      function jkl () {
+        window.grid.destroy(true)
       }
     }
   },

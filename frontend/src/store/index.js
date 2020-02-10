@@ -40,10 +40,11 @@ export default new Vuex.Store({
       }
     },
     removeTile (state, toBeRemoved) {
+      console.log('in store  ' + state.tiles)
       if (Object.prototype.hasOwnProperty.call(toBeRemoved, 'file')) {
         state.tiles = state.tiles.filter(visualization => visualization.file !== toBeRemoved.file)
       } else if (Object.prototype.hasOwnProperty.call(toBeRemoved, 'md5')) {
-        state.tiles = state.tiles.filter(dataset => dataset._id !== toBeRemoved._id)
+        state.tiles = state.tiles.filter(dataset => dataset.md5 !== toBeRemoved.md5)
       }
     }
   },
