@@ -140,14 +140,14 @@ export default {
   watch: {
     tiles () {
       if (this.tiles.length === 0) {
-        setTimeout(jkl, 100)
+        setTimeout(jkl, 200)
       } else {
         console.log('in watcher ' + this.tiles)
         for (var tile of this.$refs.tiles) {
           console.log(tile)
         }
 
-        setTimeout(asdf, 100)
+        setTimeout(asdf, 200)
       }
       function asdf () {
         window.grid = new Muuri('.grid', {
