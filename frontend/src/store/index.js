@@ -26,15 +26,16 @@ export default new Vuex.Store({
       }
     },
     addTile (state, newTile) {
+      console.log('in store  ' + state.tiles)
       if (Object.prototype.hasOwnProperty.call(newTile, 'file')) {
         var found = state.tiles.find(existingVisualisation => newTile.file === existingVisualisation.file)
         if (!found) {
-          state.tiles.push(newTile)
+          state.tiles.splice(0, 0, newTile)
         }
       } else if (Object.prototype.hasOwnProperty.call(newTile, 'md5')) {
         var existing = state.tiles.find(dataset => dataset.md5 === newTile.md5)
         if (!existing) {
-          state.tiles.push(newTile)
+          state.tiles.splice(0, 0, newTile)
         }
       }
     },

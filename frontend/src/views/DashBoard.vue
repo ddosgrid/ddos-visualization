@@ -12,7 +12,7 @@
         <md-button class="md-primary md-raised" to="/datasets">Open a dataset</md-button>
         {{ tiles }}
       </md-empty-state>
-      <div class="item" v-for="tile in tiles" :key="tile.key">
+      <div class="item" v-for="tile in tiles" :key="tile.key" ref="tiles">
         <component class="item-content" v-bind:is="getComponentType(tile)" :analysisfile="tile" :dataset="tile"></component>
       </div>
     </div>
@@ -96,7 +96,8 @@ export default {
       showLoadSetups: false,
       showSaveSetups: false,
       setupName: '',
-      loading: false
+      loading: false,
+      numberOfTiles: 0
     }
   },
   components: {
@@ -105,6 +106,7 @@ export default {
   },
   mounted: function () {
     window.gg = this.$store
+    this.numberOfTiles = this.tiles.length
     window.grid = new Muuri('.grid', {
       dragEnabled: true
     })
@@ -134,6 +136,21 @@ export default {
         return 'visualizationtile'
       } else if (Object.prototype.hasOwnProperty.call(tile, 'md5')) {
         return 'datasettile'
+      }
+    }
+  },
+  watch: {
+    tiles () {
+      console.log('in watcher ' + this.tiles)
+      for (var tile of this.$refs.tiles) {
+        console.log(tile)
+      }
+
+      setTimeout(asdf, 100)
+      function asdf () {
+        window.grid = new Muuri('.grid', {
+          dragEnabled: true
+        })
       }
     }
   },
