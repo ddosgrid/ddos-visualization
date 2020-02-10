@@ -112,11 +112,22 @@ export default {
   mounted: function () {
     window.gg = this.$store
     this.numberOfTiles = this.tiles.length
-    this.grid = new Muuri('.grid', {
-      dragEnabled: true
-    })
+    this.createGrid()
   },
   methods: {
+    createGrid: function createGrid () {
+      this.grid = new Muuri('.grid', {
+        dragEnabled: true
+      })
+      this.grid.on('move', (data) => {
+        console.log(data)
+        this.$store.commit('moveTile', data.fromIndex, data.toIndex)
+      })
+      this.grid.on('dragReleaseEnd', (item) => {
+        this.$store.commit('rearrangeTiles')
+      })
+      this.numberOfTiles = this.grid.getItems().length
+    },
     loadSetup: function saveSetup (id) {
       this.loading = true
       this.$store.commit('loadSetup', id)
@@ -149,18 +160,16 @@ export default {
   },
   watch: {
     tiles () {
-      if (this.tiles.length === 0) {
-        setTimeout(destroyGrid, 200)
+      if (this.tiles.length === this.numberOfTiles) {
+      } else if (this.tiles.length === 0) {
+        setTimeout(() => {
+          this.grid.destroy()
+        }, 300)
       } else {
-        setTimeout(redrawGrid, 200)
-      }
-      function redrawGrid () {
-        this.grid = new Muuri('.grid', {
-          dragEnabled: true
-        })
-      }
-      function destroyGrid () {
-        this.grid.destroy(true)
+        setTimeout(() => {
+          this.grid.destroy()
+          this.createGrid()
+        }, 300)
       }
     }
   },

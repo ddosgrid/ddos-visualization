@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     setups: [],
-    tiles: []
+    tiles: [],
+    moveQueue: {}
   },
   mutations: {
     storeSetup (state, name = `setup-${new Date().toJSON()}`) {
@@ -49,6 +50,15 @@ export default new Vuex.Store({
     },
     clearTiles (state) {
       state.tiles = []
+    },
+    moveTile (state, from, to) {
+      console.log('tile moved!!!')
+      state.moveQueue = { from: from, to: to }
+      // state.tiles.splice(to, 0, state.tiles.splice(from, 1)[0])
+    },
+    rearrangeTiles (state) {
+      console.log('tile rearranging!!!')
+      state.tiles.splice(state.moveQueue.to, 0, state.tiles.splice(state.moveQueue.from, 1)[0])
     }
   },
   actions: {
