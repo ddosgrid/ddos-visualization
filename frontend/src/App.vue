@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <md-tabs md-sync-route md-elevation="2" class="nav no-print">
-      <md-tab id="tab-home" md-label="" to="/" md-icon="home" exact></md-tab>
-      <md-tab id="tab-dashboard" md-label="" to="/dashboard" md-icon="dashboard" exact></md-tab>
-      <md-tab id="tab-data-sets" md-label="" to="/datasets" md-icon="view_list" exact></md-tab>
+      <md-tab id="tab-home" md-label="home" to="/" md-icon="home" exact></md-tab>
+      <md-tab id="tab-dashboard" md-label="dashboard" to="/dashboard" md-icon="dashboard" exact></md-tab>
+      <md-tab id="tab-data-sets" md-label="datasets" to="/datasets" md-icon="view_list" exact></md-tab>
     </md-tabs>
     <router-view id="main" />
   </div>
@@ -61,9 +61,15 @@ export default {
   }
   #main {
     flex: 1 1 auto;
+<<<<<<< HEAD
     width: 80%;
     padding-right: 10px;
     padding-left: 10px;
+=======
+    max-width: 1460px;
+    padding-right: 20px;
+    padding-left: 20px;
+>>>>>>> master
     margin: auto;
     overflow-y: scroll;
     scrollbar-width: none;

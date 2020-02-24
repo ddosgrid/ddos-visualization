@@ -27,7 +27,7 @@
                   {{ "Number of Packets: " + dataset.metrics.nrOfIPpackets }}
                 </md-list-item>
                 <md-list-item>
-                  {{ "Attack Size: " + dataset.metrics.attackSizeInBytes + " Bytes"}}
+                  {{ "Attack Size: " + Math.floor(dataset.metrics.attackSizeInBytes / 1000 / 1000) + " MB"}}
                 </md-list-item>
                 <md-list-item>
                   {{ "Number of Packets: " + dataset.metrics.nrOfIPpackets }}
@@ -42,6 +42,12 @@
                 </md-list-item>
                 <md-list-item>
                   {{ "Number of Source Ports: " + dataset.metrics.nrOfSrcPorts }}
+                </md-list-item>
+                <md-list-item>
+                  {{ "Number of Destination IPs: " + dataset.metrics.nrOfDstIps }}
+                </md-list-item>
+                <md-list-item>
+                  {{ "Number of Destination Ports: " + dataset.metrics.nrOfDstPorts }}
                 </md-list-item>
               </md-list>
             </md-list-item>
@@ -117,6 +123,9 @@ export default {
       if (diagram.toLowerCase() === 'scatterplot') {
         return 'scatter_plot'
       }
+      if (diagram.toLowerCase() === 'worldmap') {
+        return 'map'
+      }
       return 'add'
     }
   }
@@ -140,6 +149,7 @@ export default {
 .item {
   padding-left: 10px;
 }
+<<<<<<< HEAD
 .card {
   -webkit-animation: fadein 0.5s; /* Safari, Chrome and Opera > 12.1 */
        -moz-animation: fadein 0.5s; /* Firefox < 16 */
@@ -148,32 +158,11 @@ export default {
             animation: fadein 0.5s;
 }
 
+=======
+>>>>>>> master
 .md-card-actions {
   bottom: 0;
   width: 100%;
   position: absolute;
-}
-
-@keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
-
-/* Firefox < 16 */
-@-moz-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
-
-/* Safari, Chrome and Opera > 12.1 */
-@-webkit-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
-
-/* Internet Explorer */
-@-ms-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
 }
 </style>

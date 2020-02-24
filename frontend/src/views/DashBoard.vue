@@ -3,6 +3,7 @@
     <h1>
     Visualization Dashboard
     </h1>
+<<<<<<< HEAD
     <md-empty-state
       md-icon="grid_on"
       md-label="No analysis files were added"
@@ -13,6 +14,18 @@
       <div class="item" v-for="tile in tiles" :key="tile.key" ref="tiles">
         <component class="item-content" v-bind:is="getComponentType(tile)" :analysisfile="tile" :dataset="tile"></component>
       </div>
+=======
+
+    <div id="flex-container">
+      <md-empty-state
+        md-icon="grid_on"
+        md-label="No analysis files were added"
+        md-description="You can add a tile for each dataset that you have uploaded on the datasets page" v-if="tiles.length === 0" class="empty-notification">
+        <md-button class="md-primary md-raised" to="/datasets">Open a dataset</md-button>
+      </md-empty-state>
+
+      <component class="datasetordashboard" v-for="tile in tiles" :key="tile.key" v-bind:is="getComponentType(tile)" :analysisfile="tile" :dataset="tile"></component>
+>>>>>>> master
     </div>
 
     <md-speed-dial class="md-bottom-right no-print above" md-event="hover" id="dial">
@@ -226,6 +239,7 @@ export default {
 .above {
   z-index: 1;
 }
+<<<<<<< HEAD
 
 .grid {
   position: relative;
@@ -250,5 +264,9 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
+=======
+.datasetordashboard {
+  margin: 5px;
+>>>>>>> master
 }
 </style>
