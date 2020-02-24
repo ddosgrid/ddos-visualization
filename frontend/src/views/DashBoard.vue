@@ -121,10 +121,10 @@ export default {
       })
       this.grid.on('move', (data) => {
         console.log(data)
-        this.$store.commit('moveTile', data.fromIndex, data.toIndex)
+        this.$store.commit('newMoveTile', data)
       })
       this.grid.on('dragReleaseEnd', (item) => {
-        this.$store.commit('rearrangeTiles')
+        // this.$store.commit('rearrangeTiles')
       })
       this.numberOfTiles = this.grid.getItems().length
     },
@@ -160,7 +160,7 @@ export default {
   },
   watch: {
     tiles () {
-      if (this.tiles.length === this.numberOfTiles) {
+      if (this.tiles.length === this.numberOfTiles && this.tiles.length !== 0 && this.numberOfTiles !== 0) {
       } else if (this.tiles.length === 0) {
         setTimeout(() => {
           this.grid.destroy()

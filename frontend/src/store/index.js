@@ -59,6 +59,11 @@ export default new Vuex.Store({
     rearrangeTiles (state) {
       console.log('tile rearranging!!!')
       state.tiles.splice(state.moveQueue.to, 0, state.tiles.splice(state.moveQueue.from, 1)[0])
+    },
+    newMoveTile (state, data) {
+      console.log('tile moved!!!')
+      state.tiles.splice(data.toIndex, 0, state.tiles.splice(data.fromIndex, 1)[0])
+      console.log(state.tiles)
     }
   },
   actions: {
